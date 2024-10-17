@@ -9,46 +9,46 @@ program
   .version("1.0.0");
 
 // // Add item
-// program
-//   .command("new")
-//   .description("Add new item")
-//   .option("-t | --title <value>", "title of the item to be added")
-//   .option("-q | --quantity <value>", "amount of the quantity to be added")
-//   .option("-p | --price <value>", "price to be added")
+program
+  .command("new")
+  .description("Add new item")
+  .option("-t | --title <value>", "title of the item to be added")
+  .option("-q | --quantity <value>", "amount of the quantity to be added")
+  .option("-p | --price <value>", "price to be added")
 
-//   .action(function (options) {
-//     const title = options.title;
-//     const quantity = options.quantity;
-//     const price = options.price;
+  .action(function (options) {
+    const title = options.title;
+    const quantity = options.quantity;
+    const price = options.price;
 
-//     const newItem = {
-//       title: title,
-//       quantity: quantity,
-//       price: price,
-//       createdat: new Date(),
-//       lastUpdated: new Date(),
-//     };
+    const newItem = {
+      title: title,
+      quantity: quantity,
+      price: price,
+      createdat: new Date(),
+      lastUpdated: new Date(),
+    };
 
-//     const loadedItems = fs.readFileSync("./data/item.json", "utf-8");
-//     let items;
-//     if (!loadedItems) {
-//       items = [];
-//     }
-//     items = JSON.parse(loadedItems);
+    const loadedItems = fs.readFileSync("./data/item.json", "utf-8");
+    let items;
+    if (!loadedItems) {
+      items = [];
+    }
+    items = JSON.parse(loadedItems);
 
-//     const itemsExist = items.find(
-//       (currentItems) => currentItems.title === title,
-//     );
-//     if (itemsExist) {
-//       console.log(chalk.bgRed("Item already exists"));
-//       return;
-//     }
+    const itemsExist = items.find(
+      (currentItems) => currentItems.title === title,
+    );
+    if (itemsExist) {
+      console.log(chalk.bgRed("Item already exists"));
+      return;
+    }
 
-//     items.push(newItem);
+    items.push(newItem);
 
-//     fs.writeFileSync("./data/item.json", JSON.stringify(items));
-//     console.log(chalk.bgBlue("Item added successfully"));
-//   });
+    fs.writeFileSync("./data/item.json", JSON.stringify(items));
+    console.log(chalk.bgBlue("Item added successfully"));
+  });
 
 // // Getting Item
 // program
