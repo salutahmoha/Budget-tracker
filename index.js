@@ -1,6 +1,7 @@
 import fs from "fs";
 import { Command } from "commander";
 import chalk from "chalk";
+import addItems from "./Data/Controller/addItems.js";
 const program = new Command();
 
 program
@@ -21,33 +22,7 @@ program
     const quantity = options.quantity;
     const price = options.price;
 
-    const newItem = {
-      title: title,
-      quantity: quantity,
-      price: price,
-      createdat: new Date(),
-      lastUpdated: new Date(),
-    };
-
-    const loadedItems = fs.readFileSync("./data/item.json", "utf-8");
-    let items;
-    if (!loadedItems) {
-      items = [];
-    }
-    items = JSON.parse(loadedItems);
-
-    const itemsExist = items.find(
-      (currentItems) => currentItems.title === title,
-    );
-    if (itemsExist) {
-      console.log(chalk.bgRed("Item already exists"));
-      return;
-    }
-
-    items.push(newItem);
-
-    fs.writeFileSync("./data/item.json", JSON.stringify(items));
-    console.log(chalk.bgBlue("Item added successfully"));
+    addItems(title, quantity, price);
   });
 
 // Getting Item
@@ -117,11 +92,17 @@ program
       lastUpdated: new Date(),
     };
 
-    const allItemsExist = items.find((currentItems) => currentItems.title === title && currentItems.quantity === quantity && currentItems.price === price);
-    if(allItemsExist){
-        console.log(chalk.bgRed("items already exist"));
-        return;
-    }
+    // const allItemsExist = items.find(
+    //   (currentItems) =>
+    //     currentItems.title === title &&
+    //     currentItems.quantity === quantity &&
+    //     currentItems.price === price,
+    // );
+    // if (allItemsExist) {
+    //   console.log(chalk.bgRed("items already exist"));
+    //   return;
+    // }
+
     const loadedItems = fs.readFileSync("./data/item.json", "utf-8");
     let items;
     if (!loadedItems) {
@@ -147,11 +128,10 @@ program
     if (items.length === 0) {
       console.log("Nothing to update");
       return;
-    } 
+    }
   });
 
-
-Delete item
+// Delete item
 program
   .command("delete")
   .description("Delete a specified item")
