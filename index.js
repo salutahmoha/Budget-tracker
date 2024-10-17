@@ -3,6 +3,7 @@ import { Command } from "commander";
 import chalk from "chalk";
 import addItems from "./Data/Controller/addItems.js";
 import updateItems from "./Data/Controller/updateItems.js";
+import getItems from "./Data/Controller/getItems.js";
 const program = new Command();
 
 program
@@ -33,43 +34,8 @@ program
   .option("-t | --title <value>", "title of the item to be displayed")
   .action(function (options) {
     const title = options.title;
-    const loadedItems = fs.readFileSync("./data/item.json", "utf-8");
-    const items = JSON.parse(loadedItems);
 
-    if (items.length === 0) {
-      console.log(chalk.bgYellow("You do not have any items yet"));
-      return;
-    }
-
-    if (title) {
-      const item = items.find((currentItems) => currentItems.title === title);
-      if (item) {
-        console.log(item.title);
-        console.log("--------");
-        console.log("item.quantity");
-        console.log("--------");
-        console.log("item.price");
-        return;
-      }
-
-      console.log(chalk.bgRed(`No notes with title '${title}'`));
-      return;
-    }
-
-    items.forEach((currentItems) => {
-      console.log(chalk.bgBlue("======="));
-      console.log(currentItems.title);
-      console.log("--------");
-      console.log(currentItems.quantity);
-      console.log("--------");
-      console.log(currentItems.price);
-      console.log("--------");
-
-      console.log(
-        `CreatedAt: ${new Date(currentItems.createdat).toDateString()}`,
-      );
-      console.log(chalk.bgBlue("=======\n"));
-    });
+    getItems(title);
   });
 
 // Update Item
