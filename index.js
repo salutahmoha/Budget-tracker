@@ -96,59 +96,59 @@ program
     });
   });
 
-// // Update Item
-// program
-//   .command("update")
-//   .description("Update a specified item")
-//   .option("-t | --title <value>", "title of the item to be updated")
-//   .option("-q | --quantity <value>", "amount of the quantity to be updated")
-//   .option("-p | --price <value>", "price to be updated")
+// Update Item
+program
+  .command("update")
+  .description("Update a specified item")
+  .option("-t | --title <value>", "title of the item to be updated")
+  .option("-q | --quantity <value>", "amount of the quantity to be updated")
+  .option("-p | --price <value>", "price to be updated")
 
-//   .action(function (options) {
-//     const title = options.title;
-//     const quantity = options.quantity;
-//     const price = options.price;
+  .action(function (options) {
+    const title = options.title;
+    const quantity = options.quantity;
+    const price = options.price;
 
-//     const updateItem = {
-//       title: title,
-//       quantity: quantity,
-//       price: price,
-//       createdat: new Date(),
-//       lastUpdated: new Date(),
-//     };
+    const updateItem = {
+      title: title,
+      quantity: quantity,
+      price: price,
+      createdat: new Date(),
+      lastUpdated: new Date(),
+    };
 
-//     const allItemsExist = items.find((currentItems) => currentItems.title === title && currentItems.quantity === quantity && currentItems.price === price);
-//     if(allItemsExist){
-//         console.log(chalk.bgRed("items already exist"));
-//         return;
-//     }
-//     const loadedItems = fs.readFileSync("./data/item.json", "utf-8");
-//     let items;
-//     if (!loadedItems) {
-//       items = [];
-//     }
-//     items = JSON.parse(loadedItems);
+    const allItemsExist = items.find((currentItems) => currentItems.title === title && currentItems.quantity === quantity && currentItems.price === price);
+    if(allItemsExist){
+        console.log(chalk.bgRed("items already exist"));
+        return;
+    }
+    const loadedItems = fs.readFileSync("./data/item.json", "utf-8");
+    let items;
+    if (!loadedItems) {
+      items = [];
+    }
+    items = JSON.parse(loadedItems);
 
-//     const itemsExist = items.find(
-//       (currentItems) => currentItems.title === title,
-//     );
-//     if (itemsExist) {
-//       itemsExist.quantity = quantity;
-//       itemsExist.price = price;
+    const itemsExist = items.find(
+      (currentItems) => currentItems.title === title,
+    );
+    if (itemsExist) {
+      itemsExist.quantity = quantity;
+      itemsExist.price = price;
 
-//       console.log(chalk.bgBlue("Item updated successfully"));
-//     } else {
-//       items.push(updateItem);
-//       console.log(chalk.bgGreen("Items added successfully"));
-//     }
+      console.log(chalk.bgBlue("Item updated successfully"));
+    } else {
+      items.push(updateItem);
+      console.log(chalk.bgGreen("Items added successfully"));
+    }
 
-//     fs.writeFileSync("./data/item.json", JSON.stringify(items));
+    fs.writeFileSync("./data/item.json", JSON.stringify(items));
 
-//     if (items.length === 0) {
-//       console.log("Nothing to update");
-//       return;
-//     } 
-//   });
+    if (items.length === 0) {
+      console.log("Nothing to update");
+      return;
+    } 
+  });
 
 
 // // Delete item
