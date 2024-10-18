@@ -1,41 +1,39 @@
 import fs from "fs";
 import chalk from "chalk";
+
 function updateItems(title, quantity, price) {
-  const updateItem = {
-    title: title,
-    quantity: quantity,
-    price: price,
-    createdat: new Date(),
-    lastUpdated: new Date(),
-  };
-
-  // const allItemsExist = items.find(
-  //   (currentItems) =>
-  //     currentItems.title === title &&
-  //     currentItems.quantity === quantity &&
-  //     currentItems.price === price,
-  // );
-  // if (allItemsExist) {
-  //   console.log(chalk.bgRed("items already exist"));
-  //   return;
-  // }
-
   const loadedItems = fs.readFileSync("./data/item.json", "utf-8");
-  let items;
-  if (!loadedItems) {
-    items = [];
-  }
-  items = JSON.parse(loadedItems);
+  let items = loadedItems ? JSON.parse(loadedItems) : [];
 
   const itemsExist = items.find((currentItems) => currentItems.title === title);
-  if (itemsExist) {
-    itemsExist.quantity = quantity;
-    itemsExist.price = price;
 
+  if (itemsExist) {
+    if (itemsExist.quantity === quantity && itemsExist.price === price) {
+      console.log(chalk.bgRed("Record already exists"));
+      return;
+    }
+
+    // Update only the fields that are provided
+    if (quantity !== undefined) {
+      itemsExist.quantity = quantity;
+    }
+    if (price !== undefined) {
+      itemsExist.price = price;
+    }
+
+    itemsExist.lastUpdated = new Date();
     console.log(chalk.bgBlue("Item updated successfully"));
   } else {
+    const updateItem = {
+      title: title,
+      quantity: quantity || "",
+      price: price || "",
+      createdat: new Date(),
+      lastUpdated: new Date(),
+    };
+
     items.push(updateItem);
-    console.log(chalk.bgGreen("Items added successfully"));
+    console.log(chalk.bgGreen("Item added successfully"));
   }
 
   fs.writeFileSync("./data/item.json", JSON.stringify(items));
